@@ -20,12 +20,7 @@ parser code {:
 		Symbol result = parser.parse();
 		return result.value;
 	}
-	
-	public Map<String, Boolean> state = new HashMap<String, Boolean>();
-	
 :}
-
-// Rules
 
 // Rules
 
@@ -33,11 +28,11 @@ terminal String ID, STRING;
 terminal Double NUM;
 terminal Bool BOOL; 
 non terminal ini, ObjectQ, ListQ, Value, Key;
-non terminal PARI, PARD, COLON, COMMA; 
+non terminal PARI, PARD, COLON, COMMA;
 
 ini ::= ID:id PARI ListQ:lq PARD {: RESULT = new QuaeroObject(id); :};
 
-ObjectQ ::= ObjectQ:obj COMMA Key:key COLON Value:val {: RESULT = obj.put(key, value); :} 
+ObjectQ ::= ObjectQ:obj COMMA Key:key COLON Value:val {: RESULT = obj.put(key, value); :}
 	| ObjectQ:obj COMMA ini:list {: RESULT = obj.objectList.add(list); :};
 
 Value ::= STRING:str {: RESULT = new QuaeroString(str); :}
