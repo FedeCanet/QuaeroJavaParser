@@ -3,6 +3,7 @@ package java_quaero.parser;
 import java.io.*;
 import java.util.*;
 import java_cup.runtime.Symbol; 
+import java_quaero.ast.*;
 
 parser code {:
 	
@@ -31,19 +32,19 @@ parser code {:
 terminal String ID, STRING;
 terminal Double NUM;
 terminal Bool BOOL; 
-non terminal ins, object, list;
-non terminal PARI, PARID, COLON, COMMA, IGUAL, PUNTOCOMA, BICOND, COND, DISY, NEG, CONJ;
+non terminal ini, ObjectQ, ListQ, Value, Key;
+non terminal PARI, PARD, COLON, COMMA; 
 
-init := ID:id PARI ListQ:lq PARD {: RESULT = new QuaeroObject(id); :}
+ini ::= ID:id PARI ListQ:lq PARD {: RESULT = new QuaeroObject(id); :};
 
-ObjectQ := ObjectQ:obj COMMA Key:key COLON Value:val {: RESULT = obj.put(key, value); :} 
-	| ObjectQ:obj COMMA init:list {: RESULT = obj.objectList.add(list) ;:}
+ObjectQ ::= ObjectQ:obj COMMA Key:key COLON Value:val {: RESULT = obj.put(key, value); :} 
+	| ObjectQ:obj COMMA ini:list {: RESULT = obj.objectList.add(list); :};
 
-Value := STRING:str {: RESULT = new QuaeroString(str); :}
+Value ::= STRING:str {: RESULT = new QuaeroString(str); :}
 	| NUM:num {: RESULT = new QuaeroDouble(num); :}
-	| BOOL:bool {: RESULT = new QuaeroBoolean(bool); :}
+	| BOOL:bool {: RESULT = new QuaeroBoolean(bool); :};
 	
-Key := ID:id {: RESULT = new QuaeroString(id); :}
+Key ::= ID:id {: RESULT = new QuaeroString(id); :};
 
 
 
