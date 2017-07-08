@@ -26,21 +26,27 @@ parser code {:
 
 terminal String ID, STRING;
 terminal Double NUM;
-terminal Bool BOOL; 
-non terminal ini, ObjectQ, ListQ, Value, Key;
-non terminal PARI, PARD, COLON, COMMA;
+terminal Boolean BOOL; 
+non terminal QuaeroObject ini, objectq;
+non terminal Value value;
+non terminal String key;
+terminal PARI, PARD, COLON, COMMA;
 
-ini ::= ID:id PARI ListQ:lq PARD {: RESULT = new QuaeroObject(id); :};
+ini ::= ID:id PARI objectq:obj PARD {: RESULT = obj; obj.setTag(id); :}
+	;
 
-ObjectQ ::= ObjectQ:obj COMMA Key:key COLON Value:val {: RESULT = obj.put(key, value); :}
-	| ObjectQ:obj COMMA ini:list {: RESULT = obj.objectList.add(list); :};
-
-Value ::= STRING:str {: RESULT = new QuaeroString(str); :}
-	| NUM:num {: RESULT = new QuaeroDouble(num); :}
-	| BOOL:bool {: RESULT = new QuaeroBoolean(bool); :};
+objectq ::= key:key COLON value:val {: RESULT = new QuaeroObject(); RESULT.put(key, val); :}
+	| ini:list {: RESULT = new QuaeroObject(); RESULT.getObjectList().add(list); :}
+	| key:key COLON value:val COMMA objectq:obj {: RESULT = obj; obj.put(key, val); :}
+	| ini:list COMMA objectq:obj {: RESULT = obj; RESULT.getObjectList().add(list); :}
+	;
 	
-Key ::= ID:id {: RESULT = new QuaeroString(id); :};
-
+value ::= STRING:str {: RESULT = new QuaeroString(str); :}
+	| NUM:num {: RESULT = new QuaeroDouble(num); :}
+	| BOOL:bool {: RESULT = new QuaeroBoolean(bool); :}
+	;
+	
+key ::= ID:id {: RESULT = id; :};
 
 
 

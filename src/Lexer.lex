@@ -21,12 +21,10 @@ import java_cup.runtime.Symbol;
 ")"	  { return new Symbol(PARD); }
 ":"	  { return new Symbol(COLON); }
 ","   { return new Symbol(COMMA); }
-
 [a-zA-Z_]\w* { return new Symbol(ID, yyline, yycolumn, yytext()); }
 \"[^\n\"]*\" { return new Symbol(STRING, yyline, yycolumn, yytext()); }
 (\d*\.)?\d+([eE][+-]?\d+)? { return new Symbol(NUM, yyline, yycolumn, Double.parseDouble(yytext())); }
-true|false {return new Symbol(BOOL, yyline, yycolumn, Boolean.valueOf(yytext()); }
-\/\*([^\*]|\*+[^\/])*\*+\/  { return new Symbol(COM, yyline, yycolumn, yytext()); }
+true|false {return new Symbol(BOOL, yyline, yycolumn, Boolean.valueOf(yytext())); }
 [ \t\r\n\f\v]+
 
 	{ /* Ignore */ }
