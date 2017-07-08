@@ -19,12 +19,7 @@ parser code {:
 		Symbol result = parser.parse();
 		return result.value;
 	}
-	
-	public Map<String, Boolean> state = new HashMap<String, Boolean>();
-	
 :}
-
-// Rules
 
 // Rules
 
@@ -44,13 +39,5 @@ Value := STRING:str {: RESULT = new QuaeroString(str); :}
 	| BOOL:bool {: RESULT = new QuaeroBoolean(bool); :}
 	
 Key := ID:id {: RESULT = new QuaeroString(id); :}
-
-
-
-
-
-
- 
- 
  
   
