@@ -28,10 +28,29 @@ parser code {:
 
 // Rules
 
-terminal String ID,STRING;
+terminal String ID, STRING;
 terminal Double NUM;
 terminal Bool BOOL; 
 non terminal ins, object, list;
-non terminal PARI, PARID, COLON, COMMA;
+non terminal PARI, PARID, COLON, COMMA, IGUAL, PUNTOCOMA, BICOND, COND, DISY, NEG, CONJ;
 
- ins ::= ID PARI   
+init := ID:id PARI ListQ:lq PARD {: RESULT = new QuaeroObject(id); :}
+
+ObjectQ := ObjectQ:obj COMMA Key:key COLON Value:val {: RESULT = obj.put(key, value); :} 
+	| ObjectQ:obj COMMA init:list {: RESULT = obj.objectList.add(list) ;:}
+
+Value := STRING:str {: RESULT = new QuaeroString(str); :}
+	| NUM:num {: RESULT = new QuaeroDouble(num); :}
+	| BOOL:bool {: RESULT = new QuaeroBoolean(bool); :}
+	
+Key := ID:id {: RESULT = new QuaeroString(id); :}
+
+
+
+
+
+
+ 
+ 
+ 
+  
