@@ -6,7 +6,12 @@ import java.util.HashMap;
 public class QuaeroObject {
 	
 	private String tag;
-	private ArrayList<QuaeroObject> array;
+	private ArrayList<QuaeroObject> objectList;
 	private HashMap<String, Value> hashValue;
-
+	
+	public QuaeroObject(String id){
+		this.tag = id;
+		this.objectList = new ArrayList<QuaeroObject>();
+		this.hashValue = new HashMap<String, Value>();
+	}
 }
