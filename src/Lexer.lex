@@ -17,20 +17,16 @@ import java_cup.runtime.Symbol;
 %% 
 // Tokens.
  
-"("	  { return new Symbol(PARI, yyline, yycolumn, yytext()); }
-")"	  { return new Symbol(PARD, yyline, yycolumn, yytext()); }
-"F"	  { return new Symbol(FALSE, yyline, yycolumn, yytext()); }
-"T"	  { return new Symbol(TRUE, yyline, yycolumn, yytext()); }
-"~"	  { return new Symbol(NEG, yyline, yycolumn, yytext()); }
-"/\\" { return new Symbol(CONJ, yyline, yycolumn, yytext()); }
-"\\/" { return new Symbol(DISY, yyline, yycolumn, yytext()); }
-"->"  { return new Symbol(COND, yyline, yycolumn, yytext()); }
-"<->" { return new Symbol(BICOND, yyline, yycolumn, yytext()); }
-";"   { return new Symbol(PUNTOCOMA); }
-"="   { return new Symbol(IGUAL); }
-
-[a-z][a-zA-Z0-9]* {return new Symbol(ID, yyline, yycolumn, yytext()); }
+"("	  { return new Symbol(PARI); }
+")"	  { return new Symbol(PARD); }
+":"	  { return new Symbol(COLON); }
+","   { return new Symbol(COMMA); }
+[a-zA-Z_]\w* { return new Symbol(ID, yyline, yycolumn, yytext()); }
+\"[^\n\"]*\" { return new Symbol(STRING, yyline, yycolumn, yytext()); }
+(\d*\.)?\d+([eE][+-]?\d+)? { return new Symbol(NUM, yyline, yycolumn, Double.parseDouble(yytext())); }
+true|false {return new Symbol(BOOL, yyline, yycolumn, Boolean.valueOf(yytext())); }
 [ \t\r\n\f\v]+
+
 	{ /* Ignore */ }
 
 .	{ /* Fallback */
