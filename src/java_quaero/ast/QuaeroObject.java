@@ -15,13 +15,11 @@ public class QuaeroObject {
 	}
 
 	public void setTag(String id) {
-		// TODO Auto-generated method stub
-		
+		this.tag = id;
 	}
 
 	public void put(String key, Value val) {
-		// TODO Auto-generated method stub
-		
+		this.hashValue.put(key, val);
 	}
 
 	public ArrayList<QuaeroObject> getObjectList() {
