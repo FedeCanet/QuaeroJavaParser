@@ -14,6 +14,9 @@ public class QuaeroObject {
 		this.hashValue = new HashMap<String, Value>();
 	}
 
+	public String getTag(){
+		return tag;
+	}
 	public void setTag(String id) {
 		this.tag = id;
 	}
@@ -28,5 +31,8 @@ public class QuaeroObject {
 
 	public void setObjectList(ArrayList<QuaeroObject> objectList) {
 		this.objectList = objectList;
+	}
+	public HashMap<String,Value> getAttributes(){
+		return hashValue;
 	}
 }
