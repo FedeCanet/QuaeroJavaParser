@@ -14,7 +14,8 @@ public class BasicTests extends TestCase {
 	}
 	
 	public void test1() throws Exception {
-		assertEquals(((QuaeroExpression) Parser.parseString("$Company(b:1) & $Cosa(ed:3)")).getqObjs().get(1).getTag(), "Person"); //Como deberia ser la consulta con un solo $ o con un $ por QuaeroObject
+		assertEquals(((QuaeroExpression) Parser.parseString("$Persona(b:1) & $Persona(g:1)")).getqObjs().get(0).getTag(), "Persona"); //Como deberia ser la consulta con un solo $ o con un $ por QuaeroObject
+		
 	}
 	
 }

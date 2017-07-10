@@ -100,5 +100,34 @@ public class QuaeroExpression {
 	public void setqAtts(ArrayList<QuaeroAttribute> qAtts) {
 		this.qAtts = qAtts;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((qAtts == null) ? 0 : qAtts.hashCode());
+		result = prime * result + ((qObjs == null) ? 0 : qObjs.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuaeroExpression other = (QuaeroExpression) obj;
+		if (qAtts == null) {
+			if (other.qAtts != null)
+				return false;
+		} else if (!qAtts.equals(other.qAtts))
+			return false;
+		if (qObjs == null) {
+			if (other.qObjs != null)
+				return false;
+		} else if (!qObjs.equals(other.qObjs))
+			return false;
+		return true;
+	}
 	
 }
