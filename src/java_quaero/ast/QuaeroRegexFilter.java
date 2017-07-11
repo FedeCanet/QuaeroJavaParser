@@ -10,7 +10,11 @@ public class QuaeroRegexFilter extends QuaeroOperation {
 	public QuaeroRegexFilter(QuaeroExpression e1, String regex) {
 		super(e1);
 		System.out.println(regex);
-		this.regex = regex;
+		if(regex.contains("'")){
+			this.regex = regex.replace("'", "");
+		}else{
+			this.regex = regex;
+		}
 	}
 
 	@Override

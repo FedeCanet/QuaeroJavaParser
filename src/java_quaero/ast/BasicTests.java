@@ -17,7 +17,7 @@ public class BasicTests extends TestCase {
 		//assertEquals(((QuaeroExpression) Parser.parseString("Persona(b:1)")), "Persona");
 		String Query = "List(Company(id: 1, name: \"Google\",Person(id: 1, name: \"Larry Page\"),Person(id: 2,name: \" Serguéi Brin\")), Company(Person(id: 1,name: \"Lawrence J. Ellison\"),Person(id: 2, name: \"Bob Miner\"),Person(id: 3, name: \"Ed Oates\"), id: 2, name: \"Oracle\"))";
 		String Query2 = "List(CCCC(id: 1, name: \"Yahoo\",Person(id: 1, name: \"Larry Page\"),Person(id: 2,name: \" Serguéi Brin\")))";
-		QuaeroExpression exp = (QuaeroExpression) Parser.parseString("$"+Query2+"/ ~ [C]*");	
+		QuaeroExpression exp = (QuaeroExpression) Parser.parseString("$"+Query+"/ ~'C*'");	
 		System.out.println("????");
 		System.out.println(exp.eval());
 	}
