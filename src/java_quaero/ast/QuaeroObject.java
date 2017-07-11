@@ -3,7 +3,7 @@ package java_quaero.ast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class QuaeroObject {
+public class QuaeroObject extends QuaeroExpression {
 	
 	@Override
 	public int hashCode() {
@@ -43,11 +43,11 @@ public class QuaeroObject {
 	}
 	private String tag;
 	private ArrayList<QuaeroObject> objectList;
-	private HashMap<String, Value> hashValue;
+	private HashMap<String, QuaeroValue> hashValue;
 	
 	public QuaeroObject(){
 		this.setObjectList(new ArrayList<QuaeroObject>());
-		this.hashValue = new HashMap<String, Value>();
+		this.hashValue = new HashMap<String, QuaeroValue>();
 	}
 
 	public String getTag(){
@@ -57,7 +57,7 @@ public class QuaeroObject {
 		this.tag = id;
 	}
 
-	public void put(String key, Value val) {
+	public void put(String key, QuaeroValue val) {
 		this.hashValue.put(key, val);
 	}
 
@@ -68,7 +68,29 @@ public class QuaeroObject {
 	public void setObjectList(ArrayList<QuaeroObject> objectList) {
 		this.objectList = objectList;
 	}
-	public HashMap<String,Value> getAttributes(){
+	public HashMap<String,QuaeroValue> getAttributes(){
 		return hashValue;
 	}
+
+	@Override
+	public ArrayList<QuaeroObject> eval() {
+		ArrayList<QuaeroObject> result = new ArrayList<QuaeroObject>();
+		result.add(this);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		String result = "";
+		for (String key: hashValue.keySet()){
+			result += key+":"+hashValue.get(key)+",";
+		}
+		for (QuaeroObject qo: objectList){
+			result += qo.toString();
+		}
+		String result2 = result.substring(0, result.length()-1);
+		result2 = tag+"("+result2+")";
+		return result2;
+	}
+	
 }

@@ -1,9 +1,11 @@
 package java_quaero.ast;
 
-public class QuaeroAttribute {
+import java.util.ArrayList;
+
+public class QuaeroAttribute extends QuaeroObject{
 	String tag;
-	Value val;
-	public QuaeroAttribute(String tag, Value val) {
+	QuaeroValue val;
+	public QuaeroAttribute(String tag, QuaeroValue val) {
 		super();
 		this.tag = tag;
 		this.val = val;
@@ -14,10 +16,10 @@ public class QuaeroAttribute {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	public Value getVal() {
+	public QuaeroValue getVal() {
 		return val;
 	}
-	public void setVal(Value val) {
+	public void setVal(QuaeroValue val) {
 		this.val = val;
 	}
 	@Override
@@ -48,6 +50,17 @@ public class QuaeroAttribute {
 		} else if (!val.equals(other.val))
 			return false;
 		return true;
+	}
+	@Override
+	public ArrayList<QuaeroObject> eval() {
+		// TODO Auto-generated method stub
+		ArrayList<QuaeroObject> result = new ArrayList<QuaeroObject>();
+		result.add(this);
+		return result;
+	}
+	@Override
+	public String toString() {
+		return tag+":"+val.toString();
 	}
 	
 }

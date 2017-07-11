@@ -1,6 +1,6 @@
 package java_quaero.ast;
 
-public class QuaeroDouble extends Value {
+public class QuaeroDouble extends QuaeroValue {
 	private Double value;
 	
 	public QuaeroDouble(Double num) {
@@ -43,5 +43,9 @@ public class QuaeroDouble extends Value {
 			return false;}
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return value.toString();
+	}
 }

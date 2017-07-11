@@ -33,7 +33,7 @@ import java_cup.runtime.Symbol;
 [a-zA-Z_][a-zA-Z0-9_]* { return new Symbol(ID, yytext()); }
 \"[^\n\"]*\" { return new Symbol(STRING, yyline, yycolumn, yytext()); }
 ([0-9]*\.)?[0-9]+([eE][+-]?[0-9]+)? { return new Symbol(NUM, Double.parseDouble(yytext())); }
-[\{\}-+a-zA-Z0-9_\[\]]* { return new Symbol(REGEX , yytext()); } //Poner de alguna forma () en el regex
+[\{\}-+a-zA-Z0-9_\[\]*]* { return new Symbol(REGEX , yytext()); } //Poner de alguna forma () en el regex
 [ \t\r\n\f\v]+ { /* Ignore */ }
 
 .	{ /* Fallback */

@@ -1,10 +1,15 @@
 package java_quaero.ast;
 
-public class QuaeroString extends Value {
+public class QuaeroString extends QuaeroValue {
 	private String value;
 	
 	public QuaeroString(String str) {
 		this.value = str;
+	}
+
+	@Override
+	public String toString() {
+		return value;
 	}
 
 	@Override
