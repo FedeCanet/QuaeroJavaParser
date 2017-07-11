@@ -16,18 +16,25 @@ import java_cup.runtime.Symbol;
 
 %% 
 // Tokens.
- 
-"("	  { return new Symbol(PARI); }
-")"	  { return new Symbol(PARD); }
-":"	  { return new Symbol(COLON); }
-","   { return new Symbol(COMMA); }
-[a-zA-Z_]\w* { return new Symbol(ID, yyline, yycolumn, yytext()); }
+  
+"("	  { return new Symbol(PARI, yytext()); }
+")"	  { return new Symbol(PARD, yytext()); }
+":"	  { return new Symbol(COLON, yytext()); }
+","   { return new Symbol(COMMA, yytext()); }
+"\+"   { return new Symbol(PLUS, yytext()); }
+"-"   { return new Symbol(MINUS, yytext()); }
+"&"	  { return new Symbol(UNION, yytext()); }
+"\|"  { return new Symbol(INTER, yytext()); }
+"$"   { return new Symbol(DOLLAR, yytext()); }
+"/"   { return new Symbol(SLASH, yytext()); }
+"\."  { return new Symbol(DOT, yytext()); }
+"~"   { return new Symbol(TILDE , yytext()); }
+"\'"  { return new Symbol(QUOTE , yytext()); }
+[a-zA-Z_][a-zA-Z0-9_]* { return new Symbol(ID, yytext()); }
 \"[^\n\"]*\" { return new Symbol(STRING, yyline, yycolumn, yytext()); }
-(\d*\.)?\d+([eE][+-]?\d+)? { return new Symbol(NUM, yyline, yycolumn, Double.parseDouble(yytext())); }
-true|false {return new Symbol(BOOL, yyline, yycolumn, Boolean.valueOf(yytext())); }
-[ \t\r\n\f\v]+
-
-	{ /* Ignore */ }
+([0-9]*\.)?[0-9]+([eE][+-]?[0-9]+)? { return new Symbol(NUM, Double.parseDouble(yytext())); }
+[\{\}-+a-zA-Z0-9_\[\]*]* { return new Symbol(REGEX , yytext()); } //Poner de alguna forma () en el regex
+[ \t\r\n\f\v]+ { /* Ignore */ }
 
 .	{ /* Fallback */
 		return new Symbol(error, "Unexpected input <"+ yytext() +">!"); 

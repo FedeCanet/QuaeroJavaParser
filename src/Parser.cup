@@ -9,48 +9,63 @@ parser code {:
 	
 	public static Lexer makeLexer(String input) throws Exception {
 		return new Lexer(new StringReader(input));
-	}
+	} 
 	
 	public static Parser makeParser(String input) throws Exception {
 		return new Parser(makeLexer(input));
 	}
-	
+	 
 	public static Object parseString(String input) throws Exception {
 		Parser parser = Parser.makeParser(input);
 		Symbol result = parser.parse();
 		return result.value;
-	}
+	} 
 :}
 
 // Rules
 
-terminal String ID, STRING;
+terminal String ID, STRING,REGEX;
 terminal Double NUM;
-terminal Boolean BOOL; 
-non terminal QuaeroObject ini, objectq;
-non terminal Value value;
-non terminal String key;
-terminal PARI, PARD, COLON, COMMA;
-
-ini ::= ID:id PARI objectq:obj PARD {: RESULT = obj; obj.setTag(id); :}
+terminal Boolean BOOL;
+non terminal ini;
+non terminal QuaeroObject aux, objectq;
+non terminal QuaeroValue value;
+non terminal QuaeroExpression exp;
+non terminal String key; 
+terminal PARI, PARD, COLON, COMMA,PLUS,MINUS,UNION,INTER,DOLLAR,TILDE,SLASH,DOT, QUOTE;
+precedence left PLUS,MINUS;
+precedence left UNION, INTER;
+precedence left TILDE,SLASH,DOT;
+ini ::= aux:a {: RESULT = a; :}
+	| exp:e {: RESULT = e; :} 
 	;
-
+aux ::= ID:id PARI objectq:obj PARD {: RESULT = obj; obj.setTag(id); :}
+	;
 objectq ::= key:key COLON value:val {: RESULT = new QuaeroObject(); RESULT.put(key, val); :}
-	| ini:list {: RESULT = new QuaeroObject(); RESULT.getObjectList().add(list); :}
+	| aux:list {: RESULT = new QuaeroObject(); RESULT.getObjectList().add(list); :}
 	| key:key COLON value:val COMMA objectq:obj {: RESULT = obj; obj.put(key, val); :}
-	| ini:list COMMA objectq:obj {: RESULT = obj; RESULT.getObjectList().add(list); :}
+	| aux:list COMMA objectq:obj {: RESULT = obj; RESULT.getObjectList().add(list); :}
 	;
-	
+	 
 value ::= STRING:str {: RESULT = new QuaeroString(str); :}
 	| NUM:num {: RESULT = new QuaeroDouble(num); :}
 	| BOOL:bool {: RESULT = new QuaeroBoolean(bool); :}
 	;
 	
 key ::= ID:id {: RESULT = id; :};
-
-
-
-
+ 
+exp ::= PARI exp:e PARD {: RESULT = e; :}
+	| exp:e SLASH {: RESULT = new QuaeroSlashOperation(e); :}
+	| exp:e ID:id {: RESULT = new QuaeroTagFilter(e, id); :}	
+	| exp:e TILDE QUOTE ID:id QUOTE {:RESULT = new QuaeroTagFilter(e, id); :}
+	| exp:e TILDE REGEX:r {:RESULT = new QuaeroRegexFilter(e, r); :}
+	| exp:e DOT {: RESULT = new QuaeroDotOperation(e); :}
+	| exp:e1 UNION exp:e2 {: RESULT = new QuaeroUnion(e1,e2); :}
+	| exp:e1 INTER exp:e2 {: RESULT = new QuaeroIntersection(e1,e2); :}
+	| exp:e1 PLUS exp:e2 {: RESULT = new QuaeroConcatenation(e1,e2); :}
+	| exp:e1 MINUS exp:e2 {: RESULT = new QuaeroDifference(e1,e2); :}
+	| DOLLAR aux:qo {: RESULT = qo; :} 
+	;
 
  
  
