@@ -15,8 +15,8 @@ public class QuaeroConcatenation extends QuaeroOperation{
 		ArrayList<QuaeroObject> result = new ArrayList<QuaeroObject>();
 		ArrayList<QuaeroObject> e1Objs = e1.eval();
 		ArrayList<QuaeroObject> e2Objs = e2.eval();
-		result.addAll(e2Objs);
 		result.addAll(e1Objs);
+		result.addAll(e2Objs);
 		return result;
 	}
 

@@ -1,9 +1,11 @@
 package java_quaero.ast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 
-public class QuaeroObject extends QuaeroExpression {
+public class QuaeroObject extends QuaeroExpression{
 	
 	@Override
 	public int hashCode() {
@@ -54,11 +56,15 @@ public class QuaeroObject extends QuaeroExpression {
 		return tag;
 	}
 	public void setTag(String id) {
-		this.tag = id;
+		if(id.contains("'")){
+			tag = id.replace("'", "");
+		}
+		else{this.tag = id;}
 	}
 
 	public void put(String key, QuaeroValue val) {
-		this.hashValue.put(key, val);
+		
+		this.hashValue.put(key.replace("'", ""), val);
 	}
 
 	public ArrayList<QuaeroObject> getObjectList() {
@@ -72,7 +78,6 @@ public class QuaeroObject extends QuaeroExpression {
 		return hashValue;
 	}
 
-	@Override
 	public ArrayList<QuaeroObject> eval() {
 		ArrayList<QuaeroObject> result = new ArrayList<QuaeroObject>();
 		result.add(this);
@@ -82,13 +87,17 @@ public class QuaeroObject extends QuaeroExpression {
 	@Override
 	public String toString() {
 		String result = "";
-		for (String key: hashValue.keySet()){
+		String result2;
+		ArrayList<String> keySet = new ArrayList<String>();
+		keySet.addAll(hashValue.keySet());
+		Collections.reverse(keySet);
+		for (String key: keySet){
 			result += key+":"+hashValue.get(key)+",";
 		}
 		for (QuaeroObject qo: objectList){
-			result += qo.toString();
+			result += qo.toString()+",";
 		}
-		String result2 = result.substring(0, result.length()-1);
+	    if(!hashValue.isEmpty() || !objectList.isEmpty()){result2 = result.substring(0, result.length()-1);}else{result2 = result;}
 		result2 = tag+"("+result2+")";
 		return result2;
 	}

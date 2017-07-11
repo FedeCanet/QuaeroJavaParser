@@ -1,6 +1,7 @@
 package java_quaero.ast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class QuaeroDotOperation extends QuaeroOperation {
@@ -15,7 +16,10 @@ public class QuaeroDotOperation extends QuaeroOperation {
 		ArrayList<QuaeroObject> qObjs = e1.eval();
 		for(QuaeroObject qo: qObjs){
 			HashMap<String,QuaeroValue> mapa = qo.getAttributes();
-			for(String key: mapa.keySet()){
+			ArrayList<String> keySet = new ArrayList<String>();
+			keySet.addAll(mapa.keySet());
+			Collections.reverse(keySet);
+			for(String key: keySet){
 				result.add(new QuaeroAttribute(key, mapa.get(key)));
 			}
 		}

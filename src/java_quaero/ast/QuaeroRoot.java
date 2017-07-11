@@ -12,7 +12,14 @@ public class QuaeroRoot extends QuaeroExpression{
 
 	@Override
 	public ArrayList<QuaeroObject> eval() {
-		return null;
+		ArrayList<QuaeroObject> result = new ArrayList<QuaeroObject>(); 
+		result.add(qo);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return this.eval().toString();
 	}
 
 }

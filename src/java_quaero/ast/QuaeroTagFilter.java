@@ -7,7 +7,11 @@ public class QuaeroTagFilter extends QuaeroOperation {
 
 	public QuaeroTagFilter(QuaeroExpression e1, String tag) {
 		super(e1);
-		this.tag = tag;
+		if(tag.contains("'")){
+			this.tag = tag.replace("'", "");
+		}else{
+			this.tag = tag;
+		}
 	}
 	@Override
 	public ArrayList<QuaeroObject> eval(){

@@ -28,18 +28,14 @@ public class QuaeroDouble extends QuaeroValue {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
-		{
-			System.out.println("ke wea");
-			return false;}
+		{return false;}
 		if (getClass() != obj.getClass())
 			return false;
 		QuaeroDouble other = (QuaeroDouble) obj;
 		if (value == null) {
 			if (other.getValue()!= null){
-				System.out.println("ke wea");
 				return false;}
 		} else if (!value.equals(other.getValue())){
-			System.out.println("ke wea");
 			return false;}
 		return true;
 	}
